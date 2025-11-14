@@ -22,7 +22,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*80)
-print("🔑 Token & Authentication Manipulation")
+print(" Token & Authentication Manipulation")
 print("="*80)
 
 findings = []
@@ -52,7 +52,7 @@ def analyze_token():
 
     # Check if portal ID is embedded
     if MY_PORTAL in ACCESS_TOKEN or TARGET_PORTAL in ACCESS_TOKEN:
-        print(f"⚠️ Portal ID found in token!")
+        print(f" Portal ID found in token!")
 
 # ============================================================================
 # 2. TOKEN MUTATION ATTACKS
@@ -93,7 +93,7 @@ def test_token_mutations():
             if r.status_code == 200:
                 data = r.json()
                 if 'properties' in data:
-                    print(f"    🚨 SUCCESS!")
+                    print(f"     SUCCESS!")
                     findings.append({'mutation': name, 'token': token, 'response': data})
         except:
             pass
@@ -128,7 +128,7 @@ def test_auth_header_variations():
             if r.status_code == 200:
                 data = r.json()
                 if 'properties' in data:
-                    print(f"    🚨 SUCCESS with: {headers}")
+                    print(f"     SUCCESS with: {headers}")
                     findings.append({'headers': headers, 'response': data})
         except:
             pass
@@ -151,7 +151,7 @@ def test_token_locations():
         if r.status_code == 200:
             data = r.json()
             if 'properties' in data:
-                print(f"    🚨 SUCCESS!")
+                print(f"     SUCCESS!")
                 findings.append({'location': 'query_access_token', 'response': data})
     except:
         pass
@@ -312,16 +312,16 @@ test_client_secret()
 test_token_replay()
 
 print("\n" + "="*80)
-print(f"✅ Token Manipulation Tests Complete")
-print(f"📊 Findings: {len(findings)}")
+print(f" Token Manipulation Tests Complete")
+print(f" Findings: {len(findings)}")
 print("="*80)
 
 if findings:
-    print("\n🎉 SUCCESSFUL TOKEN ATTACKS:\n")
+    print("\n SUCCESSFUL TOKEN ATTACKS:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {json.dumps(finding, indent=2)[:300]}...")
 
     with open('/home/user/Hub/findings/token_findings.json', 'w') as f:
         json.dump(findings, f, indent=2)
 else:
-    print("\n❌ No token-based bypasses found.")
+    print("\n No token-based bypasses found.")

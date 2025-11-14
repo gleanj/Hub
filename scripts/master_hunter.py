@@ -26,9 +26,9 @@ class MasterHunter:
         """Display banner"""
         print("="*70)
         print("""
-╦ ╦╦ ╦╔╗ ╔═╗╔═╗╔═╗╔╦╗  ╔═╗╔╦╗╔═╗  ╦ ╦╦ ╦╔╗╔╔╦╗╔═╗╦═╗
-╠═╣║ ║╠╩╗╚═╗╠═╝║ ║ ║   ║   ║ ╠╣   ╠═╣║ ║║║║ ║ ║╣ ╠╦╝
-╩ ╩╚═╝╚═╝╚═╝╩  ╚═╝ ╩   ╚═╝ ╩ ╚    ╩ ╩╚═╝╝╚╝ ╩ ╚═╝╩╚═
+         
+                 
+                
         """)
         print("Target: Portal 46962361 | Bounty: $15,000 + $5,000 bonus")
         print("="*70)
@@ -204,10 +204,10 @@ class MasterHunter:
 
         print(f"\nTools Run: {len(self.results['tools_run'])}")
         for tool in self.results['tools_run']:
-            print(f"  ✓ {tool}")
+            print(f"   {tool}")
 
         if self.results['findings']:
-            print(f"\n🎯 TOTAL INTERESTING FINDINGS: {len(self.results['findings'])}")
+            print(f"\n TOTAL INTERESTING FINDINGS: {len(self.results['findings'])}")
             for i, finding in enumerate(self.results['findings'], 1):
                 print(f"\n[{i}] {finding['tool']}")
                 print(f"    {finding['note']}")
@@ -249,7 +249,7 @@ class MasterHunter:
    - Subject: "HubSpot CTF Challenge"
    - Include detailed reproduction steps
 
-Good hunting! The flag is out there. 🎯
+Good hunting! The flag is out there. 
         """)
 
     def run_all(self):

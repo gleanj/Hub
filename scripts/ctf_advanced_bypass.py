@@ -21,7 +21,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*70)
-print("🔥 Advanced CTF Bypass Techniques")
+print(" Advanced CTF Bypass Techniques")
 print("="*70)
 
 findings = []
@@ -33,11 +33,11 @@ def test_attack(name, func):
         result = func()
         if result:
             findings.append({'attack': name, 'result': result})
-            print(f"    ✓ POTENTIAL FINDING!")
+            print(f"     POTENTIAL FINDING!")
             print(f"      {json.dumps(result, indent=6)[:500]}")
             return True
     except Exception as e:
-        print(f"    ✗ Error: {str(e)[:100]}")
+        print(f"     Error: {str(e)[:100]}")
     return False
 
 # ============================================================================
@@ -63,10 +63,10 @@ def enum_contact_ids():
 
                 # Check if this contact has the flags
                 if 'firstname' in properties or 'super_secret' in properties:
-                    print(f"    → Contact {contact_id}: Found properties!")
+                    print(f"     Contact {contact_id}: Found properties!")
                     return {'contact_id': contact_id, 'data': data}
                 else:
-                    print(f"    → Contact {contact_id}: Exists but no flag properties")
+                    print(f"     Contact {contact_id}: Exists but no flag properties")
         except:
             pass
 
@@ -322,7 +322,7 @@ def properties_endpoint():
             if r.status_code == 200:
                 data = r.json()
                 if 'super_secret' in json.dumps(data):
-                    print(f"    → Found super_secret property!")
+                    print(f"     Found super_secret property!")
                     return {'url': url, 'data': data}
         except:
             pass
@@ -370,8 +370,8 @@ def test_associations():
 # MAIN EXECUTION
 # ============================================================================
 
-print(f"\n🎯 Target: Portal {TARGET_PORTAL}, Contact with 'firstname' and 'super_secret'")
-print(f"🔑 Using Access Token: {ACCESS_TOKEN[:30]}...")
+print(f"\n Target: Portal {TARGET_PORTAL}, Contact with 'firstname' and 'super_secret'")
+print(f" Using Access Token: {ACCESS_TOKEN[:30]}...")
 print("="*70)
 
 # Run all attacks
@@ -386,12 +386,12 @@ test_attack("Associations", test_associations)
 
 # Summary
 print("\n" + "="*70)
-print(f"✅ Testing Complete!")
-print(f"📊 Total Findings: {len(findings)}")
+print(f" Testing Complete!")
+print(f" Total Findings: {len(findings)}")
 print("="*70)
 
 if findings:
-    print("\n🎉 SUCCESS! Found potential bypasses:\n")
+    print("\n SUCCESS! Found potential bypasses:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {finding['attack']}")
         print(f"   {json.dumps(finding['result'], indent=3)[:300]}...\n")
@@ -399,10 +399,10 @@ if findings:
     # Save findings
     with open('/home/user/Hub/findings/advanced_findings.json', 'w') as f:
         json.dump(findings, f, indent=2)
-    print(f"💾 Saved to: findings/advanced_findings.json")
+    print(f" Saved to: findings/advanced_findings.json")
 else:
-    print("\n❌ No bypasses found with these techniques.")
-    print("\n💡 Next steps:")
+    print("\n No bypasses found with these techniques.")
+    print("\n Next steps:")
     print("  • Refresh session cookies (they may be expired)")
     print("  • Try manual testing with Burp Suite")
     print("  • Research HubSpot API documentation for edge cases")

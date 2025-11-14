@@ -23,7 +23,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*80)
-print("🔥 ZERO-DAY HUNTER - Advanced Attack Techniques")
+print(" ZERO-DAY HUNTER - Advanced Attack Techniques")
 print("="*80)
 print(f"Target: Portal {TARGET_PORTAL}")
 print(f"Strategy: Test exotic edge cases, parser differentials, logic flaws")
@@ -40,7 +40,7 @@ def log_success(attack, details, response_data):
         'timestamp': time.time()
     }
     findings.append(finding)
-    print(f"\n🚨 POTENTIAL FINDING!")
+    print(f"\n POTENTIAL FINDING!")
     print(f"Attack: {attack}")
     print(f"Details: {details}")
     print(f"Response: {json.dumps(response_data, indent=2)[:500]}")
@@ -315,7 +315,7 @@ def test_timing_attack():
         min_time = min(timings.values())
         max_time = max(timings.values())
         if max_time - min_time > 0.5:  # More than 500ms difference
-            print(f"    ⚠️ Significant timing difference detected: {max_time - min_time:.3f}s")
+            print(f"     Significant timing difference detected: {max_time - min_time:.3f}s")
             findings.append({
                 'attack': 'Timing Side Channel',
                 'details': 'Significant timing differences detected',
@@ -485,7 +485,7 @@ def test_websocket_endpoints():
             print(f"  {ws_url.split('/')[2]}: {r.status_code}")
 
             if r.status_code not in [400, 401, 403, 404, 503]:
-                print(f"    ⚠️ Unusual response: {r.text[:200]}")
+                print(f"     Unusual response: {r.text[:200]}")
         except:
             pass
 
@@ -567,7 +567,7 @@ def test_simple_race_condition():
 # MAIN EXECUTION
 # ============================================================================
 
-print("\n🎯 Starting zero-day hunting...\n")
+print("\n Starting zero-day hunting...\n")
 
 test_exotic_encodings()
 test_method_override()
@@ -583,22 +583,22 @@ test_cors_exploitation()
 test_simple_race_condition()
 
 print("\n" + "="*80)
-print(f"✅ Zero-Day Hunting Complete!")
-print(f"📊 Findings: {len(findings)}")
+print(f" Zero-Day Hunting Complete!")
+print(f" Findings: {len(findings)}")
 print("="*80)
 
 if findings:
-    print("\n🎉 POTENTIAL ZERO-DAY VULNERABILITIES FOUND:\n")
+    print("\n POTENTIAL ZERO-DAY VULNERABILITIES FOUND:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {finding.get('attack', 'Unknown')}")
         print(f"   {json.dumps(finding, indent=3)[:400]}...\n")
 
     with open('/home/user/Hub/findings/zero_day_findings.json', 'w') as f:
         json.dump(findings, f, indent=2)
-    print(f"\n💾 Saved to: findings/zero_day_findings.json")
+    print(f"\n Saved to: findings/zero_day_findings.json")
 else:
-    print("\n❌ No zero-day vulnerabilities found with these techniques.")
-    print("\n💡 Next approaches:")
+    print("\n No zero-day vulnerabilities found with these techniques.")
+    print("\n Next approaches:")
     print("  • Fresh session cookies + retry all tests")
     print("  • More aggressive race conditions (100+ requests)")
     print("  • Manual code review of HubSpot's open-source components")

