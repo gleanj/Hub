@@ -16,7 +16,7 @@ load_dotenv()
 TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 
 print("="*70)
-print("🔍 Public Reconnaissance for Portal", TARGET_PORTAL)
+print(" Public Reconnaissance for Portal", TARGET_PORTAL)
 print("="*70)
 
 findings = []
@@ -43,7 +43,7 @@ def check_public_pages():
             print(f"  {url.split('/')[3]}: {r.status_code} (length: {len(r.text)})")
 
             if r.status_code == 200 and len(r.text) > 1000:
-                print(f"    → Found public page!")
+                print(f"     Found public page!")
                 if 'firstname' in r.text.lower() or 'email' in r.text.lower():
                     findings.append({'type': 'public_page', 'url': url, 'content': r.text[:1000]})
         except Exception as e:
@@ -99,7 +99,7 @@ def check_subdomains():
 
             if r.status_code == 302:  # Redirect to login
                 location = r.headers.get('Location', '')
-                print(f"    → Redirects to: {location[:100]}")
+                print(f"     Redirects to: {location[:100]}")
         except:
             pass
 
@@ -125,7 +125,7 @@ def check_public_apis():
             print(f"  {url.split('/')[4]}: {r.status_code}")
 
             if r.status_code == 200:
-                print(f"    ✓ SUCCESS - No auth required!")
+                print(f"     SUCCESS - No auth required!")
                 data = r.json()
                 findings.append({'type': 'public_api', 'url': url, 'data': data})
             elif r.status_code != 401 and r.status_code != 403:
@@ -218,7 +218,7 @@ def check_cors():
         print(f"  Access-Control-Allow-Credentials: {r.headers.get('Access-Control-Allow-Credentials', 'Not set')}")
 
         if r.headers.get('Access-Control-Allow-Origin') == '*':
-            print(f"    → CORS allows all origins!")
+            print(f"     CORS allows all origins!")
             findings.append({'type': 'cors', 'details': 'Allows all origins'})
     except:
         pass
@@ -237,18 +237,18 @@ search_portal_info()
 check_cors()
 
 print("\n" + "="*70)
-print(f"✅ Reconnaissance Complete!")
-print(f"📊 Findings: {len(findings)}")
+print(f" Reconnaissance Complete!")
+print(f" Findings: {len(findings)}")
 print("="*70)
 
 if findings:
-    print("\n🎉 Found public information:\n")
+    print("\n Found public information:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {finding['type']}: {json.dumps(finding, indent=2)[:200]}...")
 
     with open('/home/user/Hub/findings/public_recon.json', 'w') as f:
         json.dump(findings, f, indent=2)
 else:
-    print("\n❌ No public information found.")
+    print("\n No public information found.")
     print("\nThis is expected - HubSpot properly restricts access.")
     print("The CTF challenge requires finding an authorization bypass vulnerability.")

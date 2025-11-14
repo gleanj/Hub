@@ -19,7 +19,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*70)
-print("🎯 HubSpot CTF Comprehensive Attack Script")
+print(" HubSpot CTF Comprehensive Attack Script")
 print("="*70)
 print(f"Target Portal: {TARGET_PORTAL}")
 print(f"My Portal: {MY_PORTAL}")
@@ -37,7 +37,7 @@ def log_finding(attack_type, details, response_data):
         'response': response_data
     }
     findings.append(finding)
-    print(f"\n🚨 POTENTIAL FINDING!")
+    print(f"\n POTENTIAL FINDING!")
     print(f"Attack: {attack_type}")
     print(f"Details: {details}")
     print(f"Response: {json.dumps(response_data, indent=2)[:500]}")
@@ -357,7 +357,7 @@ def test_batch_operations():
 # ============================================================================
 
 def main():
-    print("\n🚀 Starting comprehensive CTF attack...\n")
+    print("\n Starting comprehensive CTF attack...\n")
 
     # Run all tests
     test_graphql_endpoints()
@@ -368,12 +368,12 @@ def main():
 
     # Summary
     print("\n" + "="*70)
-    print(f"✅ Testing complete!")
+    print(f" Testing complete!")
     print(f"Total findings: {len(findings)}")
     print("="*70)
 
     if findings:
-        print("\n🎉 FINDINGS SUMMARY:")
+        print("\n FINDINGS SUMMARY:")
         for i, finding in enumerate(findings, 1):
             print(f"\n{i}. {finding['attack_type']}")
             print(f"   {finding['details']}")
@@ -382,9 +382,9 @@ def main():
         # Save findings
         with open('/home/user/Hub/findings/ctf_findings.json', 'w') as f:
             json.dump(findings, f, indent=2)
-        print(f"\n📁 Findings saved to: findings/ctf_findings.json")
+        print(f"\n Findings saved to: findings/ctf_findings.json")
     else:
-        print("\n❌ No successful bypasses found.")
+        print("\n No successful bypasses found.")
         print("\nNext steps:")
         print("  1. Try race conditions with Burp Turbo Intruder")
         print("  2. Manual testing with Burp Repeater")

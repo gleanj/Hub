@@ -166,8 +166,8 @@ def main():
     print("HubSpot Portal Enumeration & IDOR Testing Script")
     print("="*60)
     print()
-    print("⚠️  WARNING: Only test on portals you own or have permission to test!")
-    print("⚠️  This script is for educational and authorized testing only.")
+    print("  WARNING: Only test on portals you own or have permission to test!")
+    print("  This script is for educational and authorized testing only.")
     print()
     
     # Get configuration

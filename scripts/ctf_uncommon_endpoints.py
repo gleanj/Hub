@@ -20,7 +20,7 @@ TARGET_PORTAL = os.getenv('TARGET_PORTAL_ID', '46962361')
 MY_PORTAL = os.getenv('MY_PORTAL_ID', '50708459')
 
 print("="*70)
-print("🔬 Testing Uncommon API Endpoints")
+print(" Testing Uncommon API Endpoints")
 print("="*70)
 
 findings = []
@@ -50,7 +50,7 @@ def test_webhooks():
                 data = r.json()
                 if data:
                     findings.append({'type': 'webhook', 'url': url, 'data': data})
-                    print(f"    ✓ Got data: {json.dumps(data)[:150]}")
+                    print(f"     Got data: {json.dumps(data)[:150]}")
         except:
             pass
 
@@ -118,7 +118,7 @@ def test_lists():
                 data = r.json()
                 if data and ('contacts' in data or 'lists' in data):
                     findings.append({'type': 'lists', 'url': url, 'data': data})
-                    print(f"    ✓ Got data!")
+                    print(f"     Got data!")
         except:
             pass
 
@@ -246,7 +246,7 @@ def test_search_filters():
             if r.status_code == 200:
                 data = r.json()
                 if data.get('results'):
-                    print(f"    ✓ Found {len(data['results'])} contacts!")
+                    print(f"     Found {len(data['results'])} contacts!")
                     findings.append({'type': 'search', 'payload': payload, 'data': data})
         except Exception as e:
             print(f"    Error: {str(e)[:50]}")
@@ -300,7 +300,7 @@ def test_owners():
             if r.status_code == 200:
                 data = r.json()
                 findings.append({'type': 'owners', 'url': url, 'data': data})
-                print(f"    ✓ Got owner data!")
+                print(f"     Got owner data!")
         except:
             pass
 
@@ -313,7 +313,7 @@ def test_oauth():
     print("\n[*] Testing OAuth endpoints...")
 
     if not CLIENT_SECRET:
-        print("  ✗ No client secret available")
+        print("   No client secret available")
         return
 
     # Try to get access token for target portal (will likely fail)
@@ -352,18 +352,18 @@ test_owners()
 test_oauth()
 
 print("\n" + "="*70)
-print(f"✅ Testing Complete!")
-print(f"📊 Findings: {len(findings)}")
+print(f" Testing Complete!")
+print(f" Findings: {len(findings)}")
 print("="*70)
 
 if findings:
-    print("\n🎉 Found interesting data:\n")
+    print("\n Found interesting data:\n")
     for i, finding in enumerate(findings, 1):
         print(f"{i}. {finding['type']}")
         print(f"   {json.dumps(finding, indent=3)[:250]}...")
 
     with open('/home/user/Hub/findings/uncommon_endpoints.json', 'w') as f:
         json.dump(findings, f, indent=2)
-    print(f"\n💾 Saved to: findings/uncommon_endpoints.json")
+    print(f"\n Saved to: findings/uncommon_endpoints.json")
 else:
-    print("\n❌ No accessible endpoints found.")
+    print("\n No accessible endpoints found.")
