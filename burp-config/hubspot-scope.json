@@ -1,0 +1,109 @@
+{
+  "target": {
+    "scope": {
+      "advanced_mode": true,
+      "exclude": [
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^connect\\.com$",
+          "port": "^80$",
+          "protocol": "http"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^connect\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^shop\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^trust\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^thespot\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^ir\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^events\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        }
+      ],
+      "include": [
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^app.*\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^api.*\\.hubspot\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^api.*\\.hubapi\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^.*\\.hubspotemail\\.net$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^.*\\.hubspotpagebuilder\\.com$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^.*\\.hubspotpagebuilder\\.eu$",
+          "port": "^443$",
+          "protocol": "https"
+        },
+        {
+          "enabled": true,
+          "file": "^/.*",
+          "host": "^chatspot\\.ai$",
+          "port": "^443$",
+          "protocol": "https"
+        }
+      ]
+    }
+  }
+}
