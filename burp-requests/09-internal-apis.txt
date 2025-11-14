@@ -1,0 +1,77 @@
+# ========================================
+# INTERNAL/APP DOMAIN APIS
+# Session-based authentication patterns
+# ========================================
+
+# REQUEST 1: Inbounddb-objects Contact Read
+GET /api/inbounddb-objects/v1/crm-objects/0-1/1?portalId=46962361&includeAllValues=true HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: CRM Record Cards
+GET /api/crm-record-cards/v3/record-cards/0-1/for-object/1/for-location/CRM_RECORD_HIGHLIGHT?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Framework Builder Metadata
+GET /api/framework-builder/v1/read/metadata/type/CONTACT/crmRecordsPage?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 4: Sales Views CRM Search
+POST /api/sales-views/v2/crm-search/contacts?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"property":"hs_object_id","operator":"EQ","value":"1"}]}],"properties":["firstname","super_secret","email"]}
+
+
+# REQUEST 5: External Options Fetch
+POST /api/external-options/v3/fetch/CRM_OBJECT?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"objectTypeId":"0-1","objectIds":["1"]}
+
+
+# REQUEST 6: CRM Record Attachments
+GET /api/crm-record-attachments/v1/attachments/0-1/1/batch?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 7: Fire Alarm Notifications
+GET /api/firealarm/v4/alarm/crm-records-ui/46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 8: Legacy Contact API
+GET /api/contacts/v1/contact/vid/1/profile?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 9: Timeline Events for Contact
+GET /api/timeline/v3/events?objectType=contact&objectId=1&portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 10: Contact View State
+GET /api/contacts/v1/contact/vid/1/state?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
