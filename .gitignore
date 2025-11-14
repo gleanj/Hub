@@ -1,0 +1,41 @@
+# Security - Never commit credentials
+.env
+*.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Testing outputs
+findings/*.json
+findings/*.txt
+findings/*.log
+*.log
+
+# Burp Suite
+*.burp
+burp-*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive data
+cookies.txt
+tokens.txt
+credentials.json

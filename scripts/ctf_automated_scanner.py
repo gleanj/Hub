@@ -13,6 +13,13 @@ from datetime import datetime
 import concurrent.futures
 import urllib3
 
+# Import config
+try:
+    from config import get_api_key, has_credentials, HUBSPOT_COOKIES
+except ImportError:
+    print("Error: config.py not found. Make sure you're running from the scripts directory.")
+    sys.exit(1)
+
 # Disable SSL warnings for testing
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -402,15 +409,22 @@ def main():
     print(f"{Colors.BOLD}HubSpot CTF Automated Scanner{Colors.END}")
     print(f"{Colors.CYAN}Target: Portal 46962361 - $15,000 Bounty{Colors.END}\n")
 
-    api_key = input("Enter your HubSpot API key: ").strip()
+    # Try to load credentials from config
+    if not has_credentials():
+        print(f"{Colors.RED}Error: No credentials found in .env file{Colors.END}")
+        print("Please configure your credentials in the .env file first.")
+        sys.exit(1)
 
-    use_cookies = input("Do you have session cookies? (y/n): ").strip().lower()
-    session_cookies = None
-    if use_cookies == 'y':
-        print("\nPaste your session cookies (format: cookie1=value1; cookie2=value2):")
-        session_cookies = input().strip()
+    api_key = get_api_key()
+    print(f"{Colors.GREEN}[+] Loaded credentials from config{Colors.END}")
+    print(f"[*] Using API key: {api_key[:20]}...\n")
 
-    print(f"\n{Colors.YELLOW}Starting scan...{Colors.END}\n")
+    # Use cookies from config if available
+    session_cookies = HUBSPOT_COOKIES if HUBSPOT_COOKIES else None
+    if session_cookies:
+        print(f"{Colors.GREEN}[+] Using session cookies from config{Colors.END}\n")
+
+    print(f"{Colors.YELLOW}Starting scan...{Colors.END}\n")
 
     scanner = HubSpotCTFScanner(api_key, session_cookies)
     scanner.run_all_tests()
