@@ -1,0 +1,61 @@
+# ========================================
+# PROPERTY-SPECIFIC ACCESS
+# Try to access properties directly
+# ========================================
+
+# REQUEST 1: Get Property Definition
+GET /properties/v1/contacts/properties/named/super_secret?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: Get All Contact Properties
+GET /properties/v1/contacts/properties?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Property Groups
+GET /properties/v1/contacts/groups?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 4: CRM v3 Properties
+GET /crm/v3/properties/contacts?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 5: Property History
+GET /contacts/v1/contact/vid/1/property/super_secret/history?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 6: Get Contact by Property Value
+GET /contacts/v1/lists/all/contacts/by-property?property=email&value=UNKNOWN&portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 7: Property Statistics (might leak values)
+POST /crm/v3/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[{"filters":[{"propertyName":"super_secret","operator":"HAS_PROPERTY"}]}],"properties":["super_secret","firstname","email"],"limit":100}
+
+
+# REQUEST 8: Get Property via App Domain
+GET /api/properties/v1/contacts/properties/named/super_secret?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json

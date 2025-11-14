@@ -1,0 +1,66 @@
+# ========================================
+# GRAPHQL QUERIES - GraphQL API Testing
+# GraphQL might have different authorization logic
+# ========================================
+
+# REQUEST 1: Direct Contact Query
+POST /api/graphql/crm?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"operationName":"GetContact","variables":{"objectId":"1","objectTypeId":"0-1"},"query":"query GetContact($objectId: String!, $objectTypeId: String!) {\n  crmObject(objectId: $objectId, objectTypeId: $objectTypeId) {\n    objectId\n    properties {\n      name\n      value\n    }\n  }\n}"}
+
+
+# REQUEST 2: Contact with Specific Properties
+POST /api/graphql/crm?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"operationName":"GetContact","variables":{"objectId":"1","properties":["firstname","super_secret","email"]},"query":"query GetContact($objectId: String!, $properties: [String!]) {\n  crmObject(objectId: $objectId, objectTypeId: \"0-1\") {\n    objectId\n    properties(names: $properties) {\n      name\n      value\n    }\n  }\n}"}
+
+
+# REQUEST 3: Introspection Query (to find available fields)
+POST /api/graphql/crm?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"query":"{\n  __schema {\n    types {\n      name\n      fields {\n        name\n        type {\n          name\n        }\n      }\n    }\n  }\n}"}
+
+
+# REQUEST 4: Search Contacts via GraphQL
+POST /api/graphql/crm?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"operationName":"SearchContacts","variables":{"portalId":"46962361","limit":100},"query":"query SearchContacts($portalId: String!, $limit: Int) {\n  crmObjectSearch(objectTypeId: \"0-1\", portalId: $portalId, limit: $limit) {\n    results {\n      objectId\n      properties {\n        name\n        value\n      }\n    }\n  }\n}"}
+
+
+# REQUEST 5: Portal-Specific Object Query
+POST /api/graphql/crm HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"variables":{"portalId":"46962361","objectId":"1"},"query":"query GetPortalContact($portalId: String!, $objectId: String!) {\n  portal(portalId: $portalId) {\n    crmObject(objectId: $objectId, objectTypeId: \"0-1\") {\n      properties {\n        name\n        value\n      }\n    }\n  }\n}"}
+
+
+# REQUEST 6: Batch Query Multiple Contacts
+POST /api/graphql/crm?portalId=46962361 HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"query":"{\n  contact1: crmObject(objectId: \"1\", objectTypeId: \"0-1\") { properties { name value } }\n  contact2: crmObject(objectId: \"2\", objectTypeId: \"0-1\") { properties { name value } }\n  contact3: crmObject(objectId: \"3\", objectTypeId: \"0-1\") { properties { name value } }\n}"}
+
+
+# REQUEST 7: GraphQL with Different Portal Context
+POST /graphql/crm?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"operationName":"GetContact","variables":{"objectId":"1"},"query":"query GetContact($objectId: String!) {\n  crmObject(objectId: $objectId, objectTypeId: \"0-1\") {\n    properties { name value }\n  }\n}"}

